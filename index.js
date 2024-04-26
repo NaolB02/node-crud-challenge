@@ -1,6 +1,7 @@
 // Import necessary modules
 const express = require('express');
 const dotenv = require('dotenv');
+const cors = require('cors');
 const DBInstance = require('./database/db');
 const PersonRouter = require('./routes/person.router');
 
@@ -14,6 +15,7 @@ dotenv.config();
 app.set('db', DBInstance.personCollection);
 
 app.use(express.json());
+app.use(cors());
 
 // Mount the person router at /person endpoint
 app.use('/person', PersonRouter);
