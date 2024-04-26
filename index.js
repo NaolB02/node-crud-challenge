@@ -1,17 +1,40 @@
-const express = require('express')
-const app = express()
+// Import necessary modules
+const express = require('express');
+const dotenv = require('dotenv');
+const DBInstance = require('./database/db');
+const PersonRouter = require('./routes/person.router');
 
-let persons = [{
-    id: '1',
-    name: 'Sam',
-    age: '26',
-    hobbies: []    
-}] //This is your in memory database
+// Access the collection from the database instance
+let persons = DBInstance.personCollection;
 
-app.set('db', persons)
-//TODO: Implement crud of person
+const app = express();
+dotenv.config();
+
+// Set the 'db'
+app.set('db', DBInstance.personCollection);
+
+app.use(express.json());
+
+// Mount the person router at /person endpoint
+app.use('/person', PersonRouter);
+
+// Middleware to handle undefined routes
+app.use('*', (req, res) => {
+    res.status(404).json({ error: 'Route not found' });
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ error: 'Something went wrong' });
+});
+
+const PORT = process.env.PORT || 3000;
 
 if (require.main === module) {
-    app.listen(3000)
+    app.listen(PORT, () => {
+        console.log(`Server listening on port ${PORT}`);
+    });
 }
+
 module.exports = app;

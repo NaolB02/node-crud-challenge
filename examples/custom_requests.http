@@ -1,0 +1,31 @@
+GET http://localhost:3000/person/416e61bc-f14b-49a5-b9fe-b7b75a32b7ae
+
+###
+PUT http://localhost:3000/person/1
+content-type: application/json
+
+{
+    "age": "45"
+}
+
+###
+POST http://localhost:3000/person
+content-type: application/json
+
+{
+    "name": "John",
+    "age": "44",
+    "hobbies": ["Reading"]
+}
+
+###
+DELETE http://localhost:3000/person/1
+
+###
+PUT http://localhost:3000/person/f84ad73c-3398-4e0a-8578-8d71825267c7
+content-type: application/json
+
+{
+    "name":"Jack",
+    "age": "22"
+}
